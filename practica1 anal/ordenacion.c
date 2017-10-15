@@ -3,9 +3,9 @@
  * Descripcion: Implementacion de funciones de ordenacion 
  *
  * Fichero: ordenacion.c
- * Autor: Carlos Aguirre
- * Version: 1.0
- * Fecha: 16-09-2017
+ * Autores: Victoria Pelayo e Ignacio Rabuñal
+ * Version: 1.1
+ * Fecha: 12-10-2017
  *
  */
 
@@ -15,8 +15,18 @@
 #include "permutaciones.h"
 
 /***************************************************/
-/* Funcion: InsertSort    Fecha:                   */
-/* Vuestro comentario                              */
+/* Funcion: BubbleSort Fecha: 12-10-2017           */
+/* Autores: Victoria Pelayo e Igacio Rabuñal       */
+/*                                                 */
+/* Ordena números de menor a mayor de una tabla    */
+/* dada entre la posicion ip e iu                  */
+/*                                                 */
+/* Entrada:                                        */
+/* int* tabla: tabla que se va a ordenar           */
+/* int ip: posición desde donde se va a ordenar    */
+/* int iu: posición hasta donde se va a ordenar    */
+/* Salida:                                         */
+/* int: numero de veces que se ha realizado la ob  */
 /***************************************************/
 int BubbleSort(int* tabla, int ip, int iu){	
 	int ob = 0;

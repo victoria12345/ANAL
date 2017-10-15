@@ -3,9 +3,9 @@
  * Descripcion: Implementacion de funciones de tiempo
  *
  * Fichero: tiempos.c
- * Autor: Carlos Aguirre Maeso
- * Version: 1.0
- * Fecha: 16-09-2017
+ * Autors: Victoria Pelayo e Ignacio Rabuñal
+ * Version: 1.1
+ * Fecha: 12-10-2017
  *
  */
 
@@ -19,10 +19,21 @@
 #include <math.h>
 
 /***************************************************/
-/* Funcion: tiempo_medio_ordenacion Fecha:         */
+/* Funcion:tiempo_medio_ordenacion Fecha:12-10-2017*/
+/* Autores: Victoria Pelayo e Igacio Rabuñal       */
 /*                                                 */
-/* Vuestra documentacion (formato igual            */
-/* que en el primer apartado):                     */
+/* Ordena tablas mediante un metodo pasado.        */
+/*                                                 */
+/* Entrada:                                        */
+/* pfunc_ordena metodo: metodo que se va a usar    */
+/* para ordenar las tablas                         */
+/* int n_perms: numero de permutaciones a generar y*/
+/* ordenar                                         */
+/* int N: tamaño de las permutaciones   
+/* PTIEMPO ptiempo: estructura ptiempo que guardara*/   
+/* los resultados                                  */
+/* Salida:                                         */
+/* short: OK si se ordenan y ERR si algo falla     */
 /***************************************************/
 short tiempo_medio_ordenacion(pfunc_ordena metodo, 
                               int n_perms,
@@ -63,9 +74,25 @@ short tiempo_medio_ordenacion(pfunc_ordena metodo,
 }
 
 /***************************************************/
-/* Funcion: genera_tiempos_ordenacion Fecha:       */
+/* Funcion:tiempo_medio_ordenacion Fecha:12-10-2017*/
+/* Autores: Victoria Pelayo e Igacio Rabuñal       */
 /*                                                 */
-/* Vuestra documentacion                           */
+/* Escribe en el fichero  los tiempos medios, y los*/
+/* numeros promedio, minimo y maximo de veces que  */
+/* se ejecuta la OB,del algoritmo metodo al ordenar*/
+/* n_perm de tamaños desde num_min a num_max       */
+/* separados por un incremento incr                */
+/*                                                 */
+/* Entrada:                                        */
+/* pfunc_ordena metodo: metodo que se va a usar    */
+/* char* fichero: nombre del fichero donde se va a */
+/* escribir                                        */
+/* int num_min: tamaño minimo de las permutaciones */
+/* int max: tamaño maximo de las permutaciones     */  
+/* int incr: incremento entre los tamaños de las   */
+/* permutaciones                                   */
+/* Salida:                                         */
+/* short: OK si se escribe y ERR si algo falla     */
 /***************************************************/
 
 short genera_tiempos_ordenacion(pfunc_ordena metodo, char* fichero, 
@@ -75,17 +102,14 @@ short genera_tiempos_ordenacion(pfunc_ordena metodo, char* fichero,
 	int j, tamanio;
 
 	PTIEMPO tiempos = (PTIEMPO)malloc(n * sizeof(tiempos[0]));
-	
 	if(tiempos == NULL) free(tiempos);
 	
 	for (j = 0,tamanio = num_min; tamanio <= num_max; j++, tamanio+=incr){
 		short codigo = tiempo_medio_ordenacion(metodo, n_perms, tamanio, &tiempos[j]);
-fprintf(stderr, "%d\n", tamanio);
 		if (codigo == ERR){
 			free(tiempos);
 			return ERR;
 		}
-
 	}
 	if (guarda_tabla_tiempos(fichero, tiempos, n) == ERR) return ERR;
 	free(tiempos);
@@ -94,10 +118,21 @@ fprintf(stderr, "%d\n", tamanio);
 }
 
 /***************************************************/
-/* Funcion: guarda_tabla_tiempos Fecha:            */
+/* Funcion:tiempo_medio_ordenacion Fecha:12-10-2017*/
+/* Autores: Victoria Pelayo e Igacio Rabuñal       */
 /*                                                 */
-/* Vuestra documentacion (formato igual            */
-/* que en el primer apartado):                     */
+/* Escribe en un fichero los datos                 */
+/*                                                 */
+/* Entrada:                                        */
+/* char* fichero: nombre del fichero               */
+/* PTIEMPO timepo: tiene los datos de la           */
+/* realizacion del algortimo varias veces          */
+/* int n_tiempos: numero de veces que se realizo   */
+/* el algoritmo                                    */
+/* PTIEMPO ptiempo: estructura ptiempo que guardara*/   
+/* los resultados                                  */
+/* Salida:                                         */
+/* short: OK si se escribe y ERR si algo falla     */
 /***************************************************/
 
 short guarda_tabla_tiempos(char* fichero, PTIEMPO tiempo, int n_tiempos){
@@ -110,8 +145,8 @@ short guarda_tabla_tiempos(char* fichero, PTIEMPO tiempo, int n_tiempos){
 		fprintf(f, "%d\t", tiempo[i].N);
 		fprintf(f, "%f\t", tiempo[i].tiempo);
 		fprintf(f, "%f\t", tiempo[i].medio_ob);
-		fprintf(f, "%d\n", tiempo[i].max_ob);
-		fprintf(f, "%d\t", tiempo[i].min_ob);
+		fprintf(f, "%d\t", tiempo[i].max_ob);
+		fprintf(f, "%d\n", tiempo[i].min_ob);
 		
 	}
 	fclose(f);

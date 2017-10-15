@@ -3,32 +3,28 @@
  * Descripcion: Implementacion de funciones de generacion de permutaciones
  *
  * Fichero: permutaciones.c
- * Autor: Carlos Aguirre
- * Version: 1.0
- * Fecha: 16-09-2017
+ * Autores: Victoria Pelayo e Ignacio Rabuñal
+ * Version: 1.1
+ * Fecha: 21-09-2017
  *
  */
 #include <stdio.h>
 #include <string.h>
 
 void swap (int *a, int *b){
-
 	int temp;
 	
-	if (a == NULL || b == NULL) return;
-
 	temp = *a;
 	*a = *b;
 	*b = temp;
 	return;
-
 }
 
 #include "permutaciones.h"
 
 /***************************************************/
-/* Funcion: aleat_num Fecha:                       */
-/* Autores:                                        */
+/* Funcion: aleat_num Fecha: 21-09-2017            */
+/* Autores: Victoria Pelayo e Igacio Rabuñal       */
 /*                                                 */
 /* Rutina que genera un numero aleatorio           */
 /* entre dos numeros dados                         */
@@ -39,14 +35,13 @@ void swap (int *a, int *b){
 /* Salida:                                         */
 /* int: numero aleatorio                           */
 /***************************************************/
-int aleat_num(int inf, int sup)
-{
+int aleat_num(int inf, int sup){
 	return inf + (rand() % (sup - inf + 1));
 }
 
 /***************************************************/
-/* Funcion: genera_perm Fecha:                     */
-/* Autores:                                        */
+/* Funcion: genera_perm Fecha: 21-10-2017          */
+/* Autores: Victoria Pelayo e Ignacio Rabuñal      */
 /*                                                 */
 /* Rutina que genera una permutacion               */
 /* aleatoria                                       */
@@ -59,8 +54,7 @@ int aleat_num(int inf, int sup)
 /* que contiene a la permutacion                   */
 /* o NULL en caso de error                         */
 /***************************************************/
-int* genera_perm(int N)
-{	
+int* genera_perm(int N){	
 	int i;
   	int* perm = (int *) malloc(N * sizeof(perm[0]));
 
@@ -77,8 +71,8 @@ int* genera_perm(int N)
 }
 
 /***************************************************/
-/* Funcion: genera_permutaciones Fecha:            */
-/* Autores:                                        */
+/* Funcion: genera_permutaciones Fecha: 21-09-2017 */
+/* Autores: Victoria Pelayo e Ignacio Rabuñal      */
 /*                                                 */
 /* Funcion que genera n_perms permutaciones        */
 /* aleatorias de tamanio elementos                 */
