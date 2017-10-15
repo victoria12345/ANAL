@@ -1,0 +1,120 @@
+/**
+ *
+ * Descripcion: Implementacion de funciones de tiempo
+ *
+ * Fichero: tiempos.c
+ * Autor: Carlos Aguirre Maeso
+ * Version: 1.0
+ * Fecha: 16-09-2017
+ *
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "tiempos.h"
+#include <time.h>
+#include "ordenacion.h"
+#include "permutaciones.h"
+#include <limits.h>
+#include <math.h>
+
+/***************************************************/
+/* Funcion: tiempo_medio_ordenacion Fecha:         */
+/*                                                 */
+/* Vuestra documentacion (formato igual            */
+/* que en el primer apartado):                     */
+/***************************************************/
+short tiempo_medio_ordenacion(pfunc_ordena metodo, 
+                              int n_perms,
+                              int N, 
+                              PTIEMPO ptiempo)
+{
+	clock_t ini,fn;
+	int** perms= (int**)genera_permutaciones(n_perms,N);
+	int i;
+	if (perms == NULL) return ERR;
+
+	ptiempo->N = N;
+	ptiempo->min_ob = INT_MAX;
+	ptiempo->max_ob = 0;
+	ptiempo->medio_ob = 0;
+
+	
+	ini = clock( );
+	for( i=0; i < n_perms; i++){
+		int ob = metodo(perms[i], 0, N - 1);
+		if(ob == ERR){
+			for(i=0; i < n_perms; i++) free(perms[i]);
+			free(perms);
+			return ERR;
+		}
+		if (ob < ptiempo->min_ob) ptiempo->min_ob = ob;
+		if (ob > ptiempo->max_ob) ptiempo->max_ob = ob;
+		ptiempo->medio_ob += ob;
+	}
+	fn = clock();
+	ptiempo->medio_ob /= n_perms;
+	ptiempo->tiempo = (double)(fn - ini)/ n_perms / CLOCKS_PER_SEC;
+	
+	for(i=0; i < n_perms; i++) free(perms[i]);
+	free(perms);
+	
+	return OK;
+}
+
+/***************************************************/
+/* Funcion: genera_tiempos_ordenacion Fecha:       */
+/*                                                 */
+/* Vuestra documentacion                           */
+/***************************************************/
+
+short genera_tiempos_ordenacion(pfunc_ordena metodo, char* fichero, 
+                                int num_min, int num_max, 
+                                int incr, int n_perms){
+	int n = ((num_max - num_min) / incr) + 1;
+	int j, tamanio;
+
+	PTIEMPO tiempos = (PTIEMPO)malloc(n * sizeof(tiempos[0]));
+	
+	if(tiempos == NULL) free(tiempos);
+	
+	for (j = 0,tamanio = num_min; tamanio <= num_max; j++, tamanio+=incr){
+		short codigo = tiempo_medio_ordenacion(metodo, n_perms, tamanio, &tiempos[j]);
+fprintf(stderr, "%d\n", tamanio);
+		if (codigo == ERR){
+			free(tiempos);
+			return ERR;
+		}
+
+	}
+	if (guarda_tabla_tiempos(fichero, tiempos, n) == ERR) return ERR;
+	free(tiempos);
+
+	return OK;
+}
+
+/***************************************************/
+/* Funcion: guarda_tabla_tiempos Fecha:            */
+/*                                                 */
+/* Vuestra documentacion (formato igual            */
+/* que en el primer apartado):                     */
+/***************************************************/
+
+short guarda_tabla_tiempos(char* fichero, PTIEMPO tiempo, int n_tiempos){
+	int i;
+	
+	FILE *f = fopen(fichero,"w");
+	if (f == NULL) return ERR;
+
+	for (i = 0; i < n_tiempos; i++){
+		fprintf(f, "%d\t", tiempo[i].N);
+		fprintf(f, "%f\t", tiempo[i].tiempo);
+		fprintf(f, "%f\t", tiempo[i].medio_ob);
+		fprintf(f, "%d\n", tiempo[i].max_ob);
+		fprintf(f, "%d\t", tiempo[i].min_ob);
+		
+	}
+	fclose(f);
+	return OK;
+}
+
