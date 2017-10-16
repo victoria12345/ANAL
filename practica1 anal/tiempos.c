@@ -29,7 +29,7 @@
 /* para ordenar las tablas                         */
 /* int n_perms: numero de permutaciones a generar y*/
 /* ordenar                                         */
-/* int N: tamaño de las permutaciones   
+/* int N: tamaño de las permutaciones              */
 /* PTIEMPO ptiempo: estructura ptiempo que guardara*/   
 /* los resultados                                  */
 /* Salida:                                         */
@@ -142,14 +142,10 @@ short guarda_tabla_tiempos(char* fichero, PTIEMPO tiempo, int n_tiempos){
 	if (f == NULL) return ERR;
 
 	for (i = 0; i < n_tiempos; i++){
-		fprintf(f, "%d\t", tiempo[i].N);
-		fprintf(f, "%f\t", tiempo[i].tiempo);
-		fprintf(f, "%f\t", tiempo[i].medio_ob);
-		fprintf(f, "%d\t", tiempo[i].max_ob);
-		fprintf(f, "%d\n", tiempo[i].min_ob);
-		
+		fprintf(f, "%d\t%f\t%f\t%d\t%d\n", tiempo[i].N,tiempo[i].tiempo,tiempo[i].medio_ob,tiempo[i].max_ob,tiempo[i].min_ob);		
 	}
 	fclose(f);
+
 	return OK;
 }
 
