@@ -43,6 +43,7 @@ short tiempo_medio_ordenacion(pfunc_ordena metodo,
 	clock_t ini,fn;
 	int** perms= (int**)genera_permutaciones(n_perms,N);
 	int i;
+	
 	if (perms == NULL) return ERR;
 
 	ptiempo->N = N;
@@ -52,22 +53,33 @@ short tiempo_medio_ordenacion(pfunc_ordena metodo,
 
 	
 	ini = clock( );
+	
 	for( i=0; i < n_perms; i++){
 		int ob = metodo(perms[i], 0, N - 1);
+		
 		if(ob == ERR){
+			
 			for(i=0; i < n_perms; i++) free(perms[i]);
+			
 			free(perms);
+			
 			return ERR;
 		}
+		
 		if (ob < ptiempo->min_ob) ptiempo->min_ob = ob;
+		
 		if (ob > ptiempo->max_ob) ptiempo->max_ob = ob;
+		
 		ptiempo->medio_ob += ob;
 	}
+	
 	fn = clock();
+	
 	ptiempo->medio_ob /= n_perms;
 	ptiempo->tiempo = (double)(fn - ini)/ n_perms / CLOCKS_PER_SEC;
 	
 	for(i=0; i < n_perms; i++) free(perms[i]);
+	
 	free(perms);
 	
 	return OK;
@@ -102,16 +114,22 @@ short genera_tiempos_ordenacion(pfunc_ordena metodo, char* fichero,
 	int j, tamanio;
 
 	PTIEMPO tiempos = (PTIEMPO)malloc(n * sizeof(tiempos[0]));
+	
 	if(tiempos == NULL) free(tiempos);
 	
 	for (j = 0,tamanio = num_min; tamanio <= num_max; j++, tamanio+=incr){
 		short codigo = tiempo_medio_ordenacion(metodo, n_perms, tamanio, &tiempos[j]);
+		
 		if (codigo == ERR){
+			
 			free(tiempos);
+			
 			return ERR;
 		}
 	}
+	
 	if (guarda_tabla_tiempos(fichero, tiempos, n) == ERR) return ERR;
+	
 	free(tiempos);
 
 	return OK;

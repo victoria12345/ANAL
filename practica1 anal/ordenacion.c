@@ -39,14 +39,20 @@ int BubbleSort(int* tabla, int ip, int iu){
 
 	while (flag == 1 && i >= ip + 1) {
 		int j;
+		
 		flag = 0;
+		
 		for (j = ip; j <= i - 1; j++){
 			ob++;
+			
 			if (tabla[j] > tabla[j+1]){
+				
 				swap(&tabla[j], &tabla[j + 1]);
+				
 				flag = 1;
 			}
 		}
+		
 		i--;
 	}
 

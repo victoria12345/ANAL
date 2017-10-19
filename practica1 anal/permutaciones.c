@@ -17,6 +17,7 @@ void swap (int *a, int *b){
 	temp = *a;
 	*a = *b;
 	*b = temp;
+	
 	return;
 }
 
@@ -36,6 +37,7 @@ void swap (int *a, int *b){
 /* int: numero aleatorio                           */
 /***************************************************/
 int aleat_num(int inf, int sup){
+	
 	return inf + (rand() % (sup - inf + 1));
 }
 
@@ -90,13 +92,18 @@ int* genera_perm(int N){
 int** genera_permutaciones(int n_perms, int N){
 	int i;
 	int **perms=(int**)malloc(n_perms*sizeof(perms[0]));
+	
 	if(perms == NULL) return NULL;
 
 	for(i=0;i<n_perms;i++){
+		
 		perms[i]=genera_perm(N);
+		
 		if (perms[i]==NULL){
 			int j;
+			
 			for (j=0;j<i;j++) free(perms[j]);
+			
 			free(perms);
 		}
 	}

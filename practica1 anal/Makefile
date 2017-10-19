@@ -5,8 +5,8 @@
 
 CC = gcc -ansi -pedantic
 #CFLAGS = -Wall
-#CFLAGS = -Wall -g
-CFLAGS = -Wall -O3
+CFLAGS = -Wall -g
+#CFLAGS = -Wall -O3
 EXE = ejercicio1 ejercicio2 ejercicio3 ejercicio4 ejercicio5
 
 all : $(EXE)
